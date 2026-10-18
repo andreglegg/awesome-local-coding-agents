@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updated": "2026-10-04",
+  "updated": "2026-10-18",
   "agents": [
     {
       "id": "atomic-agent",
@@ -252,6 +252,36 @@
           "type": "source",
           "url": "https://github.com/andreglegg/forge/blob/main/src/provider.ts",
           "note": "Provider implementation explicitly discovers models from llama.cpp, LM Studio, vLLM and Ollama endpoints."
+        }
+      ]
+    },
+    {
+      "id": "olivecode",
+      "name": "OliveCode",
+      "repository": "https://github.com/BenjaminZajko/opencodeFORK",
+      "summary": "OpenCode-derived terminal coding agent with local Ollama model selection, approximate hardware-fit guidance, and optional multi-model reviews.",
+      "implementation": "TypeScript",
+      "license": "MIT",
+      "status": "active",
+      "localSupport": "local-capable",
+      "backends": [
+        "Ollama"
+      ],
+      "offline": "conditional",
+      "smallModelStatus": "unverified",
+      "smallestVerifiedModel": null,
+      "benchmarkResults": [],
+      "lastReviewed": "2026-10-18",
+      "evidence": [
+        {
+          "type": "documentation",
+          "url": "https://github.com/BenjaminZajko/opencodeFORK/blob/dev/README.md",
+          "note": "Project README documents local Ollama models, a terminal coding workflow, optional Assist reviews, and cloud/tool privacy limits."
+        },
+        {
+          "type": "source",
+          "url": "https://github.com/BenjaminZajko/opencodeFORK/blob/v0.1.0/packages/opencode/src/onboarding/ollama.ts",
+          "note": "Released source inspects the Ollama runtime and installed model capabilities; this is compatibility evidence, not small-model benchmark evidence."
         }
       ]
     }

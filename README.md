@@ -8,7 +8,7 @@
 
 > Local-capable is a compatibility claim. **Small-model verified is an empirical claim.**
 
-Last reviewed dataset: **2026-10-04** · 9 active agents · 4 local-first · 5 small-model candidates · **0 small-model verified**
+Last reviewed dataset: **2026-10-18** · 10 active agents · 4 local-first · 5 small-model candidates · **0 small-model verified**
 
 ## Why this list exists
 
@@ -41,6 +41,7 @@ This repository separates **documented local compatibility** from **measured sma
 | [Nanocoder](https://github.com/Nano-Collective/nanocoder) | 🟢 Local-first | Ollama, OpenAI-compatible | ✅ | ◻️ Unverified | — | [E1](https://github.com/Nano-Collective/nanocoder/blob/main/README.md) |
 | [Aider](https://github.com/Aider-AI/aider) | 🟡 Local-capable | Ollama, OpenAI-compatible | ◐ | ◻️ Unverified | — | [E1](https://github.com/Aider-AI/aider/blob/main/aider/website/docs/llms.md) |
 | [Forge](https://github.com/andreglegg/forge) | 🟡 Local-capable | llama.cpp, LM Studio, vLLM, Ollama, OpenAI-compatible | ◐ | ◻️ Unverified | — | [E1](https://github.com/andreglegg/forge/blob/main/src/provider.ts) |
+| [OliveCode](https://github.com/BenjaminZajko/opencodeFORK) | 🟡 Local-capable | Ollama | ◐ | ◻️ Unverified | — | [E1](https://github.com/BenjaminZajko/opencodeFORK/blob/dev/README.md) [E2](https://github.com/BenjaminZajko/opencodeFORK/blob/v0.1.0/packages/opencode/src/onboarding/ollama.ts) |
 | [Tau](https://github.com/huggingface/tau) | 🟡 Local-capable | llama.cpp, Ollama, OpenAI-compatible | ◐ | ◻️ Unverified | — | [E1](https://github.com/huggingface/tau/blob/main/website/content/guides/providers-and-models.md) |
 
 ### Notes

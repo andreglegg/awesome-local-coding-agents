@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updated": "2026-10-04",
+  "updated": "2026-10-22",
   "agents": [
     {
       "id": "atomic-agent",
@@ -252,6 +252,36 @@
           "type": "source",
           "url": "https://github.com/andreglegg/forge/blob/main/src/provider.ts",
           "note": "Provider implementation explicitly discovers models from llama.cpp, LM Studio, vLLM and Ollama endpoints."
+        }
+      ]
+    },
+    {
+      "id": "talavine-code",
+      "name": "Talavine Code",
+      "repository": "https://github.com/scrossen/talavine-code",
+      "summary": "CLI and desktop coding harness with local Ollama models and optional cloud providers.",
+      "implementation": "C# / .NET",
+      "license": "MIT",
+      "status": "active",
+      "localSupport": "local-capable",
+      "backends": [
+        "Ollama"
+      ],
+      "offline": "unknown",
+      "smallModelStatus": "unverified",
+      "smallestVerifiedModel": null,
+      "benchmarkResults": [],
+      "lastReviewed": "2026-10-22",
+      "evidence": [
+        {
+          "type": "documentation",
+          "url": "https://github.com/scrossen/talavine-code/blob/fddde2bcada96f046e0439d32e25b931de4ff075/README.md",
+          "note": "README documents the terminal CLI, repository file edits and commands, and installed tool-capable Ollama models. Cloud providers and connected tools may send data off-device; offline operation is not established here."
+        },
+        {
+          "type": "source",
+          "url": "https://github.com/scrossen/talavine-code/blob/fddde2bcada96f046e0439d32e25b931de4ff075/SwarmCore/SwarmCore.Coding/Routing/OllamaCodingLanes.cs",
+          "note": "Coding-lane discovery includes installed on-device Ollama models that support tools. This establishes an integration path, not small-model benchmark performance."
         }
       ]
     }

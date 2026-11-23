@@ -8,10 +8,11 @@
     "generate": "node scripts/generate-readme.mjs",
     "generate:check": "node scripts/generate-readme.mjs --check",
     "validate": "node scripts/validate.mjs",
-    "check": "npm run validate && npm run validate:benchmarks && npm run test && npm run fixtures:check && npm run generate:check",
+    "check": "npm run validate && npm run validate:benchmarks && npm run lint:scripts && npm run test && npm run fixtures:check && npm run generate:check",
     "validate:benchmarks": "node scripts/validate-benchmarks.mjs",
     "test": "node --test tests/*.test.mjs",
-    "fixtures:check": "node scripts/check-fixtures.mjs"
+    "fixtures:check": "node scripts/check-fixtures.mjs",
+    "lint:scripts": "node --check scripts/check-freshness.mjs && node --check scripts/publish-freshness.mjs"
   },
   "license": "MIT",
   "engines": {

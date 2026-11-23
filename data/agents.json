@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updated": "2026-10-22",
+  "updated": "2026-11-23",
   "agents": [
     {
       "id": "atomic-agent",
@@ -282,6 +282,163 @@
           "type": "source",
           "url": "https://github.com/scrossen/talavine-code/blob/fddde2bcada96f046e0439d32e25b931de4ff075/SwarmCore/SwarmCore.Coding/Routing/OllamaCodingLanes.cs",
           "note": "Coding-lane discovery includes installed on-device Ollama models that support tools. This establishes an integration path, not small-model benchmark performance."
+        }
+      ]
+    },
+    {
+      "id": "olivecode",
+      "name": "OliveCode",
+      "repository": "https://github.com/BenjaminZajko/opencodeFORK",
+      "summary": "OpenCode-derived terminal coding agent with local Ollama model selection, approximate hardware-fit guidance, and optional multi-model reviews.",
+      "implementation": "TypeScript",
+      "license": "MIT",
+      "status": "active",
+      "localSupport": "local-capable",
+      "backends": [
+        "Ollama"
+      ],
+      "offline": "conditional",
+      "smallModelStatus": "unverified",
+      "smallestVerifiedModel": null,
+      "benchmarkResults": [],
+      "lastReviewed": "2026-10-18",
+      "evidence": [
+        {
+          "type": "documentation",
+          "url": "https://github.com/BenjaminZajko/opencodeFORK/blob/dev/README.md",
+          "note": "Project README documents local Ollama models, a terminal coding workflow, optional Assist reviews, and cloud/tool privacy limits."
+        },
+        {
+          "type": "source",
+          "url": "https://github.com/BenjaminZajko/opencodeFORK/blob/v0.1.0/packages/opencode/src/onboarding/ollama.ts",
+          "note": "Released source inspects the Ollama runtime and installed model capabilities; this is compatibility evidence, not small-model benchmark evidence."
+        }
+      ]
+    },
+    {
+      "id": "codex-cli",
+      "name": "OpenAI Codex CLI",
+      "repository": "https://github.com/openai/codex",
+      "summary": "Rust terminal coding agent that can use locally hosted open models through Ollama or LM Studio using OSS mode.",
+      "implementation": "Rust",
+      "license": "Apache-2.0",
+      "status": "active",
+      "localSupport": "local-capable",
+      "backends": [
+        "Ollama",
+        "LM Studio"
+      ],
+      "offline": "conditional",
+      "smallModelStatus": "unverified",
+      "smallestVerifiedModel": null,
+      "benchmarkResults": [],
+      "lastReviewed": "2026-11-23",
+      "evidence": [
+        {
+          "type": "documentation",
+          "url": "https://github.com/openai/codex/blob/main/README.md",
+          "note": "Official README documents the interactive terminal coding-agent interface."
+        },
+        {
+          "type": "source",
+          "url": "https://github.com/openai/codex/blob/main/codex-rs/utils/cli/src/shared_options.rs",
+          "note": "CLI source includes --oss and specifies local providers ollama and lmstudio."
+        }
+      ]
+    },
+    {
+      "id": "opencode",
+      "name": "OpenCode",
+      "repository": "https://github.com/anomalyco/opencode",
+      "summary": "Terminal coding agent with local model discovery for Ollama, LM Studio and vLLM, plus configurable OpenAI-compatible endpoints.",
+      "implementation": "TypeScript",
+      "license": "MIT",
+      "status": "active",
+      "localSupport": "local-capable",
+      "backends": [
+        "Ollama",
+        "LM Studio",
+        "vLLM",
+        "OpenAI-compatible"
+      ],
+      "offline": "conditional",
+      "smallModelStatus": "unverified",
+      "smallestVerifiedModel": null,
+      "benchmarkResults": [],
+      "lastReviewed": "2026-11-23",
+      "evidence": [
+        {
+          "type": "documentation",
+          "url": "https://github.com/anomalyco/opencode/blob/dev/README.md",
+          "note": "Project README documents a terminal coding agent and agentic development workflow."
+        },
+        {
+          "type": "documentation",
+          "url": "https://github.com/anomalyco/opencode/blob/dev/services/site/src/docs/content/models.mdx",
+          "note": "First-party model guide documents automatic discovery of local Ollama, LM Studio and vLLM providers."
+        }
+      ]
+    },
+    {
+      "id": "crush",
+      "name": "Crush",
+      "repository": "https://github.com/charmbracelet/crush",
+      "summary": "Go terminal coding agent with configurable Ollama models, code-editing tools and local-provider support.",
+      "implementation": "Go",
+      "license": null,
+      "status": "active",
+      "localSupport": "local-capable",
+      "backends": [
+        "Ollama"
+      ],
+      "offline": "conditional",
+      "smallModelStatus": "unverified",
+      "smallestVerifiedModel": null,
+      "benchmarkResults": [],
+      "lastReviewed": "2026-11-23",
+      "evidence": [
+        {
+          "type": "documentation",
+          "url": "https://github.com/charmbracelet/crush/blob/main/README.md",
+          "note": "Project README describes a terminal coding agent with code modification and local model configuration."
+        },
+        {
+          "type": "documentation",
+          "url": "https://github.com/charmbracelet/crush/blob/main/docs/config/README.md",
+          "note": "Official configuration guide provides commands to register an Ollama provider and local models."
+        }
+      ]
+    },
+    {
+      "id": "qwen-code",
+      "name": "Qwen Code",
+      "repository": "https://github.com/QwenLM/qwen-code",
+      "summary": "TypeScript terminal coding agent with self-hosted Ollama, vLLM and LM Studio endpoints through an OpenAI-compatible provider.",
+      "implementation": "TypeScript",
+      "license": "Apache-2.0",
+      "status": "active",
+      "localSupport": "local-capable",
+      "backends": [
+        "Ollama",
+        "vLLM",
+        "LM Studio",
+        "OpenAI-compatible"
+      ],
+      "offline": "conditional",
+      "smallModelStatus": "unverified",
+      "smallestVerifiedModel": null,
+      "benchmarkResults": [],
+      "lastReviewed": "2026-11-23",
+      "evidence": [
+        {
+          "type": "documentation",
+          "url": "https://github.com/QwenLM/qwen-code/blob/main/README.md",
+          "note": "Project README describes terminal agent operation and support for local model providers."
+        },
+        {
+          "type": "documentation",
+          "url": "https://github.com/QwenLM/qwen-code/blob/main/docs/users/configuration/model-providers.md",
+          "note": "Official self-hosted model guide configures Ollama, vLLM and LM Studio through a local OpenAI-compatible API."
         }
       ]
     }

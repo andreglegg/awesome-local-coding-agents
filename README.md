@@ -8,7 +8,7 @@
 
 > Local-capable is a compatibility claim. **Small-model verified is an empirical claim.**
 
-Last reviewed dataset: **2026-10-22** · 10 active agents · 4 local-first · 5 small-model candidates · **0 small-model verified**
+Last reviewed dataset: **2026-11-23** · 15 active agents · 4 local-first · 5 small-model candidates · **0 small-model verified**
 
 ## Why this list exists
 
@@ -40,7 +40,12 @@ This repository separates **documented local compatibility** from **measured sma
 | [goose](https://github.com/aaif-goose/goose) | 🟡 Local-capable | Ollama, llama.cpp | ◐ | 🧪 Candidate | — | [E1](https://github.com/aaif-goose/goose/blob/main/README.md) [E2](https://github.com/aaif-goose/goose/blob/main/documentation/docs/guides/tool-shim.md) |
 | [Nanocoder](https://github.com/Nano-Collective/nanocoder) | 🟢 Local-first | Ollama, OpenAI-compatible | ✅ | ◻️ Unverified | — | [E1](https://github.com/Nano-Collective/nanocoder/blob/main/README.md) |
 | [Aider](https://github.com/Aider-AI/aider) | 🟡 Local-capable | Ollama, OpenAI-compatible | ◐ | ◻️ Unverified | — | [E1](https://github.com/Aider-AI/aider/blob/main/aider/website/docs/llms.md) |
+| [Crush](https://github.com/charmbracelet/crush) | 🟡 Local-capable | Ollama | ◐ | ◻️ Unverified | — | [E1](https://github.com/charmbracelet/crush/blob/main/README.md) [E2](https://github.com/charmbracelet/crush/blob/main/docs/config/README.md) |
 | [Forge](https://github.com/andreglegg/forge) | 🟡 Local-capable | llama.cpp, LM Studio, vLLM, Ollama, OpenAI-compatible | ◐ | ◻️ Unverified | — | [E1](https://github.com/andreglegg/forge/blob/main/src/provider.ts) |
+| [OliveCode](https://github.com/BenjaminZajko/opencodeFORK) | 🟡 Local-capable | Ollama | ◐ | ◻️ Unverified | — | [E1](https://github.com/BenjaminZajko/opencodeFORK/blob/dev/README.md) [E2](https://github.com/BenjaminZajko/opencodeFORK/blob/v0.1.0/packages/opencode/src/onboarding/ollama.ts) |
+| [OpenAI Codex CLI](https://github.com/openai/codex) | 🟡 Local-capable | Ollama, LM Studio | ◐ | ◻️ Unverified | — | [E1](https://github.com/openai/codex/blob/main/README.md) [E2](https://github.com/openai/codex/blob/main/codex-rs/utils/cli/src/shared_options.rs) |
+| [OpenCode](https://github.com/anomalyco/opencode) | 🟡 Local-capable | Ollama, LM Studio, vLLM, OpenAI-compatible | ◐ | ◻️ Unverified | — | [E1](https://github.com/anomalyco/opencode/blob/dev/README.md) [E2](https://github.com/anomalyco/opencode/blob/dev/services/site/src/docs/content/models.mdx) |
+| [Qwen Code](https://github.com/QwenLM/qwen-code) | 🟡 Local-capable | Ollama, vLLM, LM Studio, OpenAI-compatible | ◐ | ◻️ Unverified | — | [E1](https://github.com/QwenLM/qwen-code/blob/main/README.md) [E2](https://github.com/QwenLM/qwen-code/blob/main/docs/users/configuration/model-providers.md) |
 | [Talavine Code](https://github.com/scrossen/talavine-code) | 🟡 Local-capable | Ollama | ? | ◻️ Unverified | — | [E1](https://github.com/scrossen/talavine-code/blob/fddde2bcada96f046e0439d32e25b931de4ff075/README.md) [E2](https://github.com/scrossen/talavine-code/blob/fddde2bcada96f046e0439d32e25b931de4ff075/SwarmCore/SwarmCore.Coding/Routing/OllamaCodingLanes.cs) |
 | [Tau](https://github.com/huggingface/tau) | 🟡 Local-capable | llama.cpp, Ollama, OpenAI-compatible | ◐ | ◻️ Unverified | — | [E1](https://github.com/huggingface/tau/blob/main/website/content/guides/providers-and-models.md) |
 

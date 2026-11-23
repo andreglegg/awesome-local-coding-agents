@@ -4,9 +4,9 @@ This directory holds the benchmark task contracts and submitted raw results.
 
 ## Current state
 
-v0.1 defines the protocol and task contracts. v0.2 will add resettable fixture repositories and deterministic evaluators before the first official verification runs are accepted.
+v0.2 includes deterministic resettable **T0-T3 fixture projects and evaluators** under [`fixtures/`](fixtures/README.md). Run `npm run fixtures:check` to smoke-test known failures and reference fixes. These are not runs of any real coding agent.
 
-Until those fixtures land, agent entries may be `candidate` or `unverified`, but not `verified`.
+A `verified` badge still requires original, independently reviewed run records with the same <=14B agent/model configuration passing T0, T2 and at least one of T1/T3. No agent has qualified yet.
 
 ## Result filenames
 

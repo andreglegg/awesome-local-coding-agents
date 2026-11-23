@@ -94,7 +94,14 @@ npm run generate
 npm run check
 ```
 
+See [Choose a coding agent](docs/choosing-an-agent.md) for guidance on local backends and hardware claims.
+Use [reproducible benchmark fixtures](benchmarks/fixtures/README.md) to measure real agent/model performance.
+
 For the full design rationale and roadmap, see [SPEC.md](SPEC.md).
+
+## Contributors
+
+Thanks to our [community contributors](CONTRIBUTORS.md), including authors whose submitted PRs were integrated through follow-up maintainer commits.
 
 ## Related projects
 

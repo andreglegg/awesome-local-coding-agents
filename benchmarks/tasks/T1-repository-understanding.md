@@ -1,11 +1,9 @@
-# T1 v1 — Repository Understanding
+# t1-v1 — Versioned task
 
-**Goal:** measure grounded repository comprehension under limited context.
+**Fixture:** `benchmarks/fixtures/t1-v1/project/` copied into a clean isolated workspace.
 
-The v0.2 fixture will ask architecture questions whose answers require inspecting multiple files.
+**Exact agent prompt:**
 
-**Pass:** all required factual claims match the fixture's evaluator key and cite or identify the relevant code locations.
+> Inspect this codebase without editing existing files. Create architecture.json in the workspace root containing six string fields: entryPoint, requestModule, cacheModule, dataModule, cacheKeyPrefix, databaseFunction. Determine their values from the source code. Use exact paths/names.
 
-**Fail:** material hallucination, missing required relationships, or no repository inspection.
-
-This task is read-only.
+**Pass:** `node benchmarks/evaluators/evaluate.mjs t1-v1 /absolute/workspace/path` exits 0. Human intervention beyond ordinary permission approvals invalidates verification. Do not share evaluator/reference solutions with the agent.

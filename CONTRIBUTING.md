@@ -77,3 +77,11 @@ An entry may be moved to a historical section if the upstream project becomes ar
 - [ ] Labels are conservative.
 - [ ] `npm run check` passes.
 - [ ] README was regenerated.
+
+## Attribution and conflict resolution
+
+Keep original contributor credit when resolving a PR conflict or incorporating a submission through a replacement PR. Preserve the actual contributor-authored commit in project history when possible; do not invent author identities, silently claim original work, or assume a PR mention counts as GitHub commit credit. Use a history-preserving merge if original commit ancestry must be retained. Maintain public credit in [CONTRIBUTORS.md](CONTRIBUTORS.md).
+
+## Benchmark fixture review
+
+Fixture code and task acceptance must be reproducible and independent of any agent. Contributed agents must never receive evaluator/reference files in their test workspace. Review submitted benchmark result JSON with `npm run check`; this validates metadata and verification gates but does not independently reproduce an LLM run.

@@ -1,9 +1,9 @@
-# T3 v1 — Multi-file Change
+# t3-v1 — Versioned task
 
-**Goal:** implement a bounded feature requiring coordinated changes across several files.
+**Fixture:** `benchmarks/fixtures/t3-v1/project/` copied into a clean isolated workspace.
 
-The v0.2 fixture will require a small public API change, implementation update, and test coverage.
+**Exact agent prompt:**
 
-**Pass:** hidden evaluator passes, public tests pass, and the requested behavior is implemented without unrelated edits.
+> Implement coupon WELCOME10 as a 10% discount on the subtotal; checkout() must return rounded subtotal, discount and total. Other coupons must leave totals unchanged. Update both the discount calculation and checkout integration files. Run the tests.
 
-**Fail:** only part of the feature is implemented, API and implementation diverge, tests are bypassed, or manual guidance is required.
+**Pass:** `node benchmarks/evaluators/evaluate.mjs t3-v1 /absolute/workspace/path` exits 0. Human intervention beyond ordinary permission approvals invalidates verification. Do not share evaluator/reference solutions with the agent.

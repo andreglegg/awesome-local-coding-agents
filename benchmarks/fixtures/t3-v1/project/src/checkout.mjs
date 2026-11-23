@@ -1,0 +1,1 @@
+import {discount} from "./discount.mjs";export function checkout(items,coupon){const subtotal=Math.round(items.reduce((n,item)=>n+item.price*item.quantity,0)*100)/100;const saved=discount(subtotal,coupon);return {subtotal,discount:saved,total:subtotal};}

@@ -5,3 +5,4 @@ coverage/
 .tmp/
 
 .codex-bridge/
+freshness-report.json

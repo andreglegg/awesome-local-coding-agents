@@ -1,0 +1,33 @@
+name: evidence-freshness
+
+on:
+  schedule:
+    - cron: "0 7 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check-evidence:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Scan upstreams and first-party evidence
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: node scripts/check-freshness.mjs
+      - name: File actionable review issue when needed
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: node scripts/publish-freshness.mjs
+      - name: Upload report
+        uses: actions/upload-artifact@v4
+        with:
+          name: freshness-report
+          path: freshness-report.json

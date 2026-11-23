@@ -1,0 +1,1 @@
+import test from "node:test";import assert from "node:assert/strict";import {shippingFee} from "../src/shipping.mjs";test("boundary",()=>assert.equal(shippingFee(50),0));test("below",()=>assert.equal(shippingFee(49),5));

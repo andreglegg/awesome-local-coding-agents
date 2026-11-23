@@ -1,9 +1,9 @@
-# T2 v1 — Bug Fix
+# t2-v1 — Versioned task
 
-**Goal:** diagnose and repair a seeded defect without being told the faulty file.
+**Fixture:** `benchmarks/fixtures/t2-v1/project/` copied into a clean isolated workspace.
 
-The v0.2 fixture will start with a deterministic failing test. The initial prompt will say only that the test suite is failing and ask the agent to find the cause, fix it, and verify the repository.
+**Exact agent prompt:**
 
-**Pass:** hidden evaluator and project tests pass, with no unrelated behavior changes.
+> The test suite is failing. Diagnose and fix the implementation without altering tests or weakening input validation, then rerun the tests.
 
-**Fail:** tests still fail, expected behavior is weakened, tests are deleted/disabled, or manual hints are required.
+**Pass:** `node benchmarks/evaluators/evaluate.mjs t2-v1 /absolute/workspace/path` exits 0. Human intervention beyond ordinary permission approvals invalidates verification. Do not share evaluator/reference solutions with the agent.

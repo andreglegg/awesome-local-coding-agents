@@ -1,0 +1,1 @@
+import test from "node:test";import assert from "node:assert/strict";import {checkout} from "../src/checkout.mjs";test("coupon",()=>assert.deepEqual(checkout([{price:100,quantity:1}],"WELCOME10"),{subtotal:100,discount:10,total:90}));

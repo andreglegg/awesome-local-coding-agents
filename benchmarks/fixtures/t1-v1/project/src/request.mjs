@@ -1,0 +1,1 @@
+import {getOrFetch} from "./cache.mjs";import {loadUser} from "./database.mjs";export const handleRequest=(path)=>{const id=path.replace("/users/","");return getOrFetch("user:"+id,()=>loadUser(id));};

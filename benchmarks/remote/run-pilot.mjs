@@ -34,8 +34,9 @@ const startedAt = new Date().toISOString();
 const begun = Date.now();
 const dockerArgs = [
   "run", "--rm", "--network=none", "--cap-drop=ALL",
-  "--security-opt=no-new-privileges", "--memory=12g", "--cpus=3",
-  "--pids-limit=256", "--tmpfs=/tmp:rw,size=3g",
+  "--security-opt=no-new-privileges", "--user="+process.getuid()+":"+process.getgid(),
+  "--memory=12g", "--cpus=3", "--pids-limit=256",
+  "--tmpfs=/tmp:rw,size=3g,mode=1777",
   "-v", work+":/work:rw", "-w", "/work",
   "-e", "BENCH_AGENT="+agent, "-e", "BENCH_PROMPT="+prompt,
   "local-agent-benchmark:cpu"

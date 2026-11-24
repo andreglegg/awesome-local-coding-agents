@@ -55,7 +55,7 @@ const verifierText = (evaluated.stdout||"") + (evaluated.stderr||"");
 fs.writeFileSync(path.join(reportDirectory,name+".agent.log"),agentText);
 fs.writeFileSync(path.join(reportDirectory,name+".verifier.log"),verifierText);
 const passed = evaluated.status === 0 && agentRun.status === 0;
-const metadataLine = agentText.match(/BENCH_MODEL_META=(\\{[^\\n]+\\})/);
+const metadataLine = agentText.match(/BENCH_MODEL_META=(\{[^\n]+\})/);
 let selectedModel = {};
 try { if (metadataLine) selectedModel = JSON.parse(metadataLine[1]); } catch {}
 const result = {
@@ -81,9 +81,9 @@ if (!passed) {
 }
 if (process.env.GITHUB_STEP_SUMMARY) {
   fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,
-    "| Agent | Task | Attempt | Outcome | Duration |\\n|---|---|---:|---|---:|\\n| " +
+    "| Agent | Task | Attempt | Outcome | Duration |\n|---|---|---:|---|---:|\n| " +
     agent + " | " + task + " | " + attempt + " | **" + (passed ? "PASS" : "FAIL") +
-    "** | " + elapsedSeconds + "s |\\n");
+    "** | " + elapsedSeconds + "s |\n");
 }
 fs.rmSync(scratch,{recursive:true,force:true});
 // The workflow should still publish failed attempts as artifacts.

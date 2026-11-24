@@ -1,0 +1,81 @@
+name: benchmark-pilot
+
+on:
+  workflow_dispatch:
+    inputs:
+      agent:
+        description: Agent to benchmark
+        type: choice
+        required: true
+        options:
+          - forge
+          - opencode
+          - codex-cli
+        default: forge
+      task:
+        description: Benchmark task
+        type: choice
+        required: true
+        options:
+          - t0-v1
+          - t1-v1
+          - t2-v1
+          - t3-v1
+        default: t0-v1
+      attempt:
+        description: Fresh attempt number
+        type: choice
+        required: true
+        options:
+          - '1'
+          - '2'
+          - '3'
+        default: '1'
+  push:
+    branches:
+      - 'benchmark-pilot/**'
+    paths:
+      - '.github/workflows/benchmark-pilot.yml'
+      - 'benchmarks/remote/**'
+      - 'benchmarks/fixtures/**'
+      - 'benchmarks/tasks/**'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: benchmark-pilot-${{ github.ref }}-${{ github.event_name }}
+  cancel-in-progress: false
+
+jobs:
+  cpu-pilot:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 95
+    env:
+      BENCH_AGENT: ${{ github.event_name == 'workflow_dispatch' && inputs.agent || 'forge' }}
+      BENCH_TASK: ${{ github.event_name == 'workflow_dispatch' && inputs.task || 't0-v1' }}
+      BENCH_ATTEMPT: ${{ github.event_name == 'workflow_dispatch' && inputs.attempt || '1' }}
+    steps:
+      - name: Checkout controlled benchmark source
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Record runner disk and memory
+        run: |
+          df -h
+          free -h
+      - name: Build pinned agents and a local Ollama model
+        run: docker build --progress=plain -t local-agent-benchmark:cpu -f benchmarks/remote/Dockerfile .
+      - name: Run offline benchmark in disposable Docker network namespace
+        run: node benchmarks/remote/run-pilot.mjs "$BENCH_AGENT" "$BENCH_TASK" "$BENCH_ATTEMPT"
+      - name: Publish every attempt, including failures
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cpu-pilot-${{ github.run_id }}-${{ github.run_attempt }}
+          path: benchmark-artifacts/
+          if-no-files-found: warn
+          retention-days: 30

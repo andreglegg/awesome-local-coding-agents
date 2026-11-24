@@ -9,16 +9,11 @@
 - Preserve original contributor-authored commits and credit when integrating a conflicting PR; use a merge commit instead of squash when necessary.
 - Do not merge code executing untrusted agent/model output in GitHub's privileged CI; benchmark runners should use isolated disposable systems.
 
-## GitHub settings that require repository administration
+## Branch protection on main
 
-The connected GitHub integration can read branch/ruleset settings but cannot create or enforce branch-protection rules. **The repository owner should set these once**:
+The active [Protect main ruleset](https://github.com/andreglegg/awesome-local-coding-agents/rules/27968796) applies to the default branch, `main`. It requires a pull request and the GitHub Actions `validate` check, blocks force pushes and branch deletion, and has no bypass actors. The ruleset does not require an approving review, resolved conversations, or an up-to-date base. Still review substantive changes and revalidate if the base changes could affect them.
 
-1. GitHub repository **Settings → Rules → Rulesets → New branch ruleset** for `main`.
-2. Require pull requests, passing GitHub Actions **validate** status, and block force pushes and deletion.
-3. Keep administrator emergency access only where needed, and enable discussion/review for higher-risk changes.
-4. Consider enforcing CODEOWNERS reviews for workflows, validation, evaluators, release configuration and project governance.
-
-Avoid requiring an unregistered check name until the first successful run reveals the exact status name. Verify external forks can run the required check before enforcing it.
+If the ruleset is missing or disabled, pause merges. The repository owner can restore it under **Settings → Rules → Rulesets**. Apply it to `main`, require pull requests and the GitHub Actions `validate` check, block force pushes and deletion, and leave the bypass list empty. Verify that the check reports from GitHub Actions; if a fork run is pending approval, follow GitHub's approval process and wait for the check to pass.
 
 ## Scheduled checks
 

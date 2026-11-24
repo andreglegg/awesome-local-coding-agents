@@ -2,7 +2,7 @@
 
 This workflow lets repository maintainers run **real local-model agents** on a public GitHub Actions 4-CPU, 16-GB Linux runner without relying on a personal machine. Public standard runner minutes are free, but there is **no GPU** and the small-model harness may be impractically slow or fail. These are empirical outcomes, not endorsements.
 
-The `.github/workflows/benchmark-pilot.yml` workflow can be started manually from Actions when it is on the default branch, selecting `forge`, `opencode`, or `codex-cli`, T0–T3, and attempt 1–3. The special `benchmark-pilot/**` branch trigger is only for commissioning the workflow; it starts Forge/T0/attempt 1. Do not use it for regular unreviewed PR submissions.
+The `.github/workflows/benchmark-pilot.yml` workflow can be started manually from Actions when it is on the default branch, selecting `forge`, `opencode`, or `codex-cli`, T0–T3, and attempt 1–3. The special `benchmark-pilot/**` branch trigger is only for commissioning the workflow; it starts **Forge, OpenCode and Codex CLI** on T0/attempt 1 (one Docker build). Do not use it for regular unreviewed PR submissions.
 
 The Docker image contains pinned versions of the 3 CLIs and Ollama. The model is **qwen2.5-coder:1.5b**, pulled during image build. Version, CLI flags, setup and context length are recorded. **Ollama's model tag should be further pinned by its resolved digest before treating runs as fully reproducible.** This is only a low-resource capability pilot, not a final fair 7B–14B ranking.
 

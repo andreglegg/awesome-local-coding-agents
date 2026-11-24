@@ -69,8 +69,16 @@ jobs:
           free -h
       - name: Build pinned agents and a local Ollama model
         run: docker build --progress=plain -t local-agent-benchmark:cpu -f benchmarks/remote/Dockerfile .
-      - name: Run offline benchmark in disposable Docker network namespace
-        run: node benchmarks/remote/run-pilot.mjs "$BENCH_AGENT" "$BENCH_TASK" "$BENCH_ATTEMPT"
+      - name: Run offline benchmarks in disposable Docker network namespaces
+        run: |
+          if [ "${{ github.event_name }}" = "push" ]; then
+            echo "Commission three agents on one shared model and task"
+            for agent in forge opencode codex-cli; do
+              node benchmarks/remote/run-pilot.mjs "$agent" "$BENCH_TASK" "$BENCH_ATTEMPT"
+            done
+          else
+            node benchmarks/remote/run-pilot.mjs "$BENCH_AGENT" "$BENCH_TASK" "$BENCH_ATTEMPT"
+          fi
       - name: Publish every attempt, including failures
         if: always()
         uses: actions/upload-artifact@v4

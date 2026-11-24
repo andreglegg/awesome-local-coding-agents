@@ -29,17 +29,29 @@ fi
 echo "Benchmark environment: agent=$BENCH_AGENT, network=none, model=qwen2.5-coder:1.5b"
 ollama --version
 ollama list
+curl -fsS http://127.0.0.1:11434/api/tags | node -e '
+  let source = "";
+  process.stdin.on("data", (chunk) => { source += chunk; });
+  process.stdin.on("end", () => {
+    const selected = JSON.parse(source).models.find((m) => m.name === "qwen2.5-coder:1.5b");
+    if (!selected) process.exit(65);
+    console.log("BENCH_MODEL_META=" + JSON.stringify({
+      digest: selected.digest, quantization: selected.details?.quantization_level ?? "unknown",
+      parameterSize: selected.details?.parameter_size ?? "unknown"
+    }));
+  });
+'
 case "$BENCH_AGENT" in
   forge)
     forge --version
-    exec_timeout=780
+    exec_timeout=240
     timeout "$exec_timeout" forge run "$BENCH_PROMPT" --yes \
       --url http://127.0.0.1:11434/v1 --model qwen2.5-coder:1.5b \
       --context 8192 --max-tokens 1024 --max-turns 10
     ;;
   codex-cli)
     codex --version
-    timeout 780 codex exec --oss --local-provider ollama \
+    timeout 240 codex exec --oss --local-provider ollama \
       --skip-git-repo-check -m qwen2.5-coder:1.5b \
       --sandbox workspace-write "$BENCH_PROMPT"
     ;;
@@ -47,7 +59,7 @@ case "$BENCH_AGENT" in
     opencode --version
     mkdir -p "$HOME/.config/opencode"
     printf '%s\n' '{"permission":{"edit":"allow","bash":"allow"}}' > "$HOME/.config/opencode/opencode.json"
-    timeout 780 opencode run --model ollama/qwen2.5-coder:1.5b "$BENCH_PROMPT"
+    timeout 240 opencode run --model ollama/qwen2.5-coder:1.5b "$BENCH_PROMPT"
     ;;
   *)
     echo "Unsupported agent: $BENCH_AGENT" >&2

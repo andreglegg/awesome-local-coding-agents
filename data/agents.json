@@ -150,7 +150,7 @@
     {
       "id": "agentty",
       "name": "agentty",
-      "repository": "https://github.com/1ay1/agentty",
+      "repository": "https://github.com/agentty-org/agentty",
       "summary": "Native C++ terminal agent with local Ollama support, local retrieval, and aggressive context reduction.",
       "implementation": "C++",
       "license": "MIT",
@@ -168,7 +168,7 @@
       "evidence": [
         {
           "type": "documentation",
-          "url": "https://github.com/1ay1/agentty/blob/master/README.md",
+          "url": "https://github.com/agentty-org/agentty/blob/5365695bdea5d9dc98f8d22ae338f74078a062e2/README.md",
           "note": "README documents fully local Ollama models, local retrieval, and reduced repository context."
         }
       ]

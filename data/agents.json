@@ -8,7 +8,7 @@
       "repository": "https://github.com/AtomicBot-ai/atomic-agent",
       "summary": "Local-first terminal agent with llama.cpp-oriented inference and explicit engineering for small quantized models.",
       "implementation": "TypeScript",
-      "license": null,
+      "license": "MIT",
       "status": "active",
       "localSupport": "local-first",
       "backends": [
@@ -25,6 +25,11 @@
           "type": "documentation",
           "url": "https://github.com/AtomicBot-ai/atomic-agent/blob/main/README.md",
           "note": "README describes the agent as local-first and says llama.cpp is used so small quantized models remain useful on consumer hardware."
+        },
+        {
+          "type": "source",
+          "url": "https://github.com/AtomicBot-ai/atomic-agent/blob/3144ea31455c367174501989a438735ae2d43247/LICENSE",
+          "note": "Upstream repository license at this revision: MIT."
         }
       ]
     },
@@ -61,7 +66,7 @@
       "repository": "https://github.com/Nano-Collective/nanocoder",
       "summary": "Community-built local-first coding agent supporting local models through Ollama plus OpenAI-compatible APIs.",
       "implementation": "TypeScript",
-      "license": null,
+      "license": "MIT",
       "status": "active",
       "localSupport": "local-first",
       "backends": [
@@ -78,6 +83,11 @@
           "type": "documentation",
           "url": "https://github.com/Nano-Collective/nanocoder/blob/main/README.md",
           "note": "README describes Nanocoder as local-first and documents Ollama as a local model provider."
+        },
+        {
+          "type": "source",
+          "url": "https://github.com/Nano-Collective/nanocoder/blob/ab3de142d826bf4b0016554325321cd861c33094/LICENSE.md",
+          "note": "Upstream repository license at this revision: MIT."
         }
       ]
     },
@@ -87,7 +97,7 @@
       "repository": "https://github.com/Swival/swival",
       "summary": "Coding agent designed to give smaller and local models careful context management and a consistent agent workflow.",
       "implementation": "Python",
-      "license": null,
+      "license": "MIT",
       "status": "active",
       "localSupport": "local-first",
       "backends": [
@@ -113,6 +123,11 @@
           "type": "documentation",
           "url": "https://github.com/Swival/swival/blob/master/docs.md/providers.md",
           "note": "Provider documentation covers llama.cpp and generic local OpenAI-compatible servers including Ollama, vLLM and LocalAI."
+        },
+        {
+          "type": "source",
+          "url": "https://github.com/Swival/swival/blob/73a9bb6aa25d5cccaeeb875a20f56e8fad306619/LICENSE",
+          "note": "Upstream repository license at this revision: MIT."
         }
       ]
     },
@@ -179,7 +194,7 @@
       "repository": "https://github.com/Aider-AI/aider",
       "summary": "Mature terminal pair-programming agent with documented Ollama and local OpenAI-compatible model support.",
       "implementation": "Python",
-      "license": null,
+      "license": "Apache-2.0",
       "status": "active",
       "localSupport": "local-capable",
       "backends": [
@@ -196,6 +211,11 @@
           "type": "documentation",
           "url": "https://github.com/Aider-AI/aider/blob/main/aider/website/docs/llms.md",
           "note": "Aider documentation explicitly supports local models through Ollama and local OpenAI-compatible APIs."
+        },
+        {
+          "type": "source",
+          "url": "https://github.com/Aider-AI/aider/blob/5dc9490bb35f9729ef2c95d00a19ccd30c26339c/LICENSE.txt",
+          "note": "Upstream repository license at this revision: Apache-2.0."
         }
       ]
     },
@@ -205,7 +225,7 @@
       "repository": "https://github.com/huggingface/tau",
       "summary": "Small readable terminal coding-agent harness with local providers through llama.cpp and OpenAI-compatible endpoints.",
       "implementation": "Python",
-      "license": null,
+      "license": "MIT",
       "status": "active",
       "localSupport": "local-capable",
       "backends": [
@@ -223,6 +243,11 @@
           "type": "documentation",
           "url": "https://github.com/huggingface/tau/blob/main/website/content/guides/providers-and-models.md",
           "note": "Provider guide documents local OpenAI-compatible endpoints including llama.cpp and Ollama."
+        },
+        {
+          "type": "source",
+          "url": "https://github.com/huggingface/tau/blob/775ed0519edab1ebedd340a1819940a2d98fc889/LICENSE",
+          "note": "Upstream repository license at this revision: MIT."
         }
       ]
     },
@@ -385,7 +410,7 @@
       "repository": "https://github.com/charmbracelet/crush",
       "summary": "Go terminal coding agent with configurable Ollama models, code-editing tools and local-provider support.",
       "implementation": "Go",
-      "license": null,
+      "license": "FSL-1.1-MIT",
       "status": "active",
       "localSupport": "local-capable",
       "backends": [
@@ -406,6 +431,11 @@
           "type": "documentation",
           "url": "https://github.com/charmbracelet/crush/blob/main/docs/config/README.md",
           "note": "Official configuration guide provides commands to register an Ollama provider and local models."
+        },
+        {
+          "type": "source",
+          "url": "https://github.com/charmbracelet/crush/blob/152e565f9f63c73d1d61157db1eb31afea46ba8e/LICENSE.md",
+          "note": "Upstream license at this revision: Functional Source License 1.1, MIT Future License (FSL-1.1-MIT)."
         }
       ]
     },

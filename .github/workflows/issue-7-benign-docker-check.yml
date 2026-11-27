@@ -1,0 +1,151 @@
+name: Issue 7 benign Docker check
+on:
+  push:
+    branches: [codex/issue-7-benign-docker-check-20261127]
+    paths: [.github/workflows/issue-7-benign-docker-check.yml]
+
+permissions: {}
+concurrency:
+  group: issue-7-benign-docker-check-20261127
+  cancel-in-progress: false
+
+jobs:
+  probe:
+    if: >-
+      github.repository == 'andreglegg/awesome-local-coding-agents' &&
+      github.ref == 'refs/heads/codex/issue-7-benign-docker-check-20261127' &&
+      github.event.created == true &&
+      github.event.before == '0000000000000000000000000000000000000000' &&
+      github.run_attempt == 1
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    env:
+      # The publisher must verify the reviewed commit has this sole parent before creating the ref.
+      REVIEWED_PARENT: 45e46e99e2799caa189988a6ef6991ae0e31d1d1
+      IMAGE_REF: docker.io/library/node@sha256:d20a7b8b4184bf74fe77499b5460a3d69e582bc733d50287e40c3fe791764851
+      FIXTURE_SHA256: 9bf557770940ac8be74175c465653708ca441099792e9c603f9dfdaec41407ad
+    steps:
+      - name: Admit the pinned public image on the host
+        id: admission
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$RUNNER_OS/$RUNNER_ARCH" = Linux/X64
+          unset DOCKER_HOST DOCKER_CONTEXT DOCKER_TLS_VERIFY DOCKER_CERT_PATH
+          test -S /var/run/docker.sock
+          config=$(mktemp -d "$RUNNER_TEMP/issue7-docker-admission.XXXXXXXX")
+          trap 'rm -rf -- "$config"' EXIT
+          export DOCKER_CONFIG="$config"
+          docker_server=$(timeout 15s docker version --format '{{.Server.Version}}')
+          [[ "$docker_server" =~ ^[0-9][0-9A-Za-z.+-]*$ ]]
+          if ! timeout 15s docker image inspect "$IMAGE_REF" >/dev/null 2>&1; then
+            # The only probe-specific network admission; never run or resolve a tag.
+            timeout -k 5s 90s docker pull --quiet --platform linux/amd64 "$IMAGE_REF" >/dev/null
+          fi
+          image_id=$(timeout 15s docker image inspect "$IMAGE_REF" |
+            jq -er --arg digest "${IMAGE_REF##*@}" '
+              .[0] | select(.Os == "linux" and .Architecture == "amd64")
+              | select(any(.RepoDigests[]?;
+                . == ("node@" + $digest) or . == ("library/node@" + $digest)
+                or . == ("docker.io/library/node@" + $digest))) | .Id
+            ')
+          [[ "$image_id" =~ ^sha256:[a-f0-9]{64}$ ]]
+          printf 'image_id=%s\ndocker_server=%s\n' "$image_id" "$docker_server" >> "$GITHUB_OUTPUT"
+
+      - name: Check benign isolation offline and verify teardown
+        shell: bash
+        env:
+          IMAGE_ID: ${{ steps.admission.outputs.image_id }}
+          DOCKER_SERVER: ${{ steps.admission.outputs.docker_server }}
+        run: |
+          set -euo pipefail
+          [[ "$GITHUB_RUN_ID" =~ ^[0-9]+$ && "$GITHUB_RUN_ATTEMPT" == 1 ]]
+          [[ "$GITHUB_SHA" =~ ^[a-f0-9]{40}$ && "$IMAGE_ID" =~ ^sha256:[a-f0-9]{64}$ ]]
+          unset DOCKER_HOST DOCKER_CONTEXT DOCKER_TLS_VERIFY DOCKER_CERT_PATH
+          test -S /var/run/docker.sock
+          work=$(mktemp -d "$RUNNER_TEMP/issue7-probe.XXXXXXXX")
+          name="issue7-benign-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          trap 'rm -rf -- "$work"' EXIT
+          mkdir "$work/docker"
+          export DOCKER_CONFIG="$work/docker"
+          remaining() { timeout 10s docker ps -aq --filter "name=^/${name}$"; }
+          left=$(remaining)
+          test -z "$left"
+          cleanup() {
+            rc=$?
+            trap - EXIT
+            set +e
+            left=$(remaining) || rc=1
+            if [[ -n "$left" ]]; then
+              timeout 15s docker rm -f -- "$name" >/dev/null || rc=1
+            fi
+            left=$(remaining) || rc=1
+            [[ -z "$left" ]] || rc=1
+            rm -rf -- "$work" || rc=1
+            exit "$rc"
+          }
+          trap cleanup EXIT
+          trap 'exit 130' INT
+          trap 'exit 143' TERM
+
+          fixture="$work/fixture.json"
+          printf '%s\n' '{"probe":"benign","value":42}' > "$fixture"
+          chmod 0444 "$fixture"
+          check_fixture() { printf '%s  %s\n' "$FIXTURE_SHA256" "$fixture" | sha256sum --check --status; }
+          check_fixture
+          read -r -d '' probe <<'JS' || test "$?" -eq 1
+          const assert = require("node:assert/strict");
+          const { createHash } = require("node:crypto");
+          const { readFileSync, writeFileSync } = require("node:fs");
+          const { networkInterfaces } = require("node:os");
+          assert.equal(process.platform + "/" + process.arch, "linux/x64");
+          assert.equal(process.version, "v22.23.5");
+          assert.equal(process.getuid(), 1000);
+          assert.equal(process.getgid(), 1000);
+          assert.deepEqual(Object.keys(process.env).sort(), ["HOME", "PATH"]);
+          const interfaces = networkInterfaces();
+          assert.ok(interfaces.lo?.length);
+          assert.ok(Object.entries(interfaces).every(([name, list]) =>
+            name === "lo" && list.every(address => address.internal)));
+          const input = readFileSync("/probe-fixture.json");
+          assert.equal(createHash("sha256").update(input).digest("hex"), process.argv[1]);
+          assert.deepEqual(JSON.parse(input), { probe: "benign", value: 42 });
+          writeFileSync("/tmp/probe-ok", "ok\n", { flag: "wx" });
+          assert.equal(readFileSync("/tmp/probe-ok", "utf8"), "ok\n");
+          process.stdout.write("benign fixture and loopback-only interface verified\n");
+          JS
+
+          timeout -k 5s 20s docker create --name "$name" --pull=never \
+            --network=none --read-only --cap-drop=ALL --security-opt=no-new-privileges \
+            --user=1000:1000 --memory=512m --memory-swap=512m --cpus=1 --pids-limit=64 \
+            --tmpfs=/tmp:rw,nosuid,nodev,noexec,size=64m,mode=1777 \
+            --mount "type=bind,src=$fixture,dst=/probe-fixture.json,readonly" \
+            --entrypoint /usr/bin/env "$IMAGE_ID" -i HOME=/tmp PATH=/usr/local/bin:/usr/bin:/bin \
+            /usr/local/bin/node -e "$probe" "$FIXTURE_SHA256" >/dev/null
+          timeout 10s docker inspect --type container "$name" |
+            jq -e --arg id "$IMAGE_ID" --arg source "$fixture" '
+              length == 1 and (.[0] | .Image == $id and .Config.User == "1000:1000"
+              and (.HostConfig | .NetworkMode == "none" and .ReadonlyRootfs and (.Privileged | not)
+                and .CapDrop == ["ALL"] and ((.CapAdd // []) | length == 0)
+                and any(.SecurityOpt[]; test("^no-new-privileges([=:]true)?$"))
+                and .Memory == 536870912 and .MemorySwap == 536870912
+                and .NanoCpus == 1000000000 and .PidsLimit == 64
+                and .Tmpfs == {"/tmp":"rw,nosuid,nodev,noexec,size=64m,mode=1777"})
+              and ([.Mounts[] | select(.Type != "tmpfs")] | length == 1 and
+                (.[0] | .Type == "bind" and .Source == $source
+                  and .Destination == "/probe-fixture.json" and (.RW | not)))
+              and all(.Mounts[] | select(.Type == "tmpfs"); .Destination == "/tmp"))
+            ' >/dev/null
+          output=$(timeout -k 5s 25s docker start -a "$name")
+          test "$output" = 'benign fixture and loopback-only interface verified'
+          test "$(timeout 10s docker inspect --format '{{.State.Status}}/{{.State.ExitCode}}' "$name")" = exited/0
+          check_fixture
+          timeout 15s docker rm -- "$name" >/dev/null
+          left=$(remaining)
+          test -z "$left"
+          rm -rf -- "$work"
+          trap - EXIT INT TERM
+
+          printf 'Benign Docker check: PASS\n\n- Head: `%s`\n- Expected parent (pre-publication gate): `%s`\n- Run/attempt: `%s/%s`\n- Docker server: `%s`\n- Image manifest: `%s`\n- Image ID: `%s`\n- Fixture SHA-256: `%s`\n- Offline settings, unchanged fixture and container teardown: PASS\n' \
+            "$GITHUB_SHA" "$REVIEWED_PARENT" "$GITHUB_RUN_ID" "$GITHUB_RUN_ATTEMPT" \
+            "$DOCKER_SERVER" "$IMAGE_REF" "$IMAGE_ID" "$FIXTURE_SHA256" >> "$GITHUB_STEP_SUMMARY"
